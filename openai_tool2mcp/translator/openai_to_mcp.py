@@ -1,5 +1,5 @@
 import json
-from typing import Any, Union
+from typing import Any
 
 from ..models.mcp import MCPResponse
 from ..models.openai import ToolResponse
@@ -77,7 +77,7 @@ def format_search_results(results: list[dict[str, Any]]) -> str:
     return "\n\n".join(formatted_results)
 
 
-def format_code_result(result: Union[dict[str, Any], str]) -> str:
+def format_code_result(result: dict[str, Any] | str) -> str:
     """
     Format code execution result in a human-readable format
     """

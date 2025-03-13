@@ -1,6 +1,6 @@
 import asyncio
 import time
-from typing import Any, Optional
+from typing import Any
 
 import openai
 
@@ -39,7 +39,7 @@ class RunTimeoutError(TimeoutError):
 class OpenAIClient:
     """Client for interacting with the OpenAI API"""
 
-    def __init__(self, api_key: str, request_timeout: int = 30, max_retries: int = 3):
+    def __init__(self, api_key: str | None, request_timeout: int = 30, max_retries: int = 3):
         """
         Initialize the OpenAI client.
 
@@ -104,7 +104,7 @@ class OpenAIClient:
 
         return response
 
-    async def _create_thread(self) -> Optional[Any]:
+    async def _create_thread(self) -> Any | None:
         """Create a new thread"""
         for attempt in range(self.max_retries):
             try:
@@ -118,7 +118,7 @@ class OpenAIClient:
                 return thread
         return None
 
-    async def _create_message(self, thread_id: str, content: str) -> Optional[Any]:
+    async def _create_message(self, thread_id: str, content: str) -> Any | None:
         """Create a new message in a thread"""
         for attempt in range(self.max_retries):
             try:
@@ -135,8 +135,8 @@ class OpenAIClient:
         return None
 
     async def _create_assistant(
-        self, tools: list[dict], instructions: str = "", model: str = "gpt-4-turbo"
-    ) -> Optional[Any]:
+        self, tools: list[dict], instructions: str = "", model: str = "gpt-4o-mini"
+    ) -> Any | None:
         """Create a new assistant with the specified tools"""
         for attempt in range(self.max_retries):
             try:
@@ -154,7 +154,7 @@ class OpenAIClient:
                 return assistant
         return None
 
-    async def _create_run(self, thread_id: str, assistant_id: str) -> Optional[Any]:
+    async def _create_run(self, thread_id: str, assistant_id: str) -> Any | None:
         """Create a new run"""
         for attempt in range(self.max_retries):
             try:

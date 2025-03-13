@@ -14,6 +14,7 @@ nav:
       - Architecture Overview: architecture.md
       - Implementation Guide: implementation.md
       - API Reference: api-reference.md
+      - Using with uv: uv-integration.md
   - Modules: modules.md
 plugins:
   - search

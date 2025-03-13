@@ -17,8 +17,8 @@ def main():
 
     # Start command
     start_parser = subparsers.add_parser("start", help="Start the MCP server")
-    start_parser.add_argument("--host", default="127.0.0.1", help="Host to listen on")
-    start_parser.add_argument("--port", type=int, default=8000, help="Port to listen on")
+    start_parser.add_argument("--host", default="127.0.0.1", help="Host to listen on (for HTTP transport)")
+    start_parser.add_argument("--port", type=int, default=8000, help="Port to listen on (for HTTP transport)")
     start_parser.add_argument("--api-key", help="OpenAI API key (defaults to OPENAI_API_KEY env var)")
     start_parser.add_argument(
         "--tools",
@@ -31,6 +31,12 @@ def main():
     start_parser.add_argument("--retries", type=int, default=3, help="Maximum number of retries")
     start_parser.add_argument(
         "--log-level", choices=["debug", "info", "warning", "error", "critical"], default="info", help="Logging level"
+    )
+    start_parser.add_argument(
+        "--transport",
+        choices=["stdio", "sse", "http"],
+        default="http",
+        help="Transport method (stdio, sse, or http). Use stdio for MCP compatibility.",
     )
 
     # List command
@@ -54,7 +60,7 @@ def main():
 
         # Start server
         server = MCPServer(config)
-        server.start(host=args.host, port=args.port)
+        server.start(host=args.host, port=args.port, transport=args.transport)
     elif args.command == "list":
         # List available tools
         print("Available tools:")
