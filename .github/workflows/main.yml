@@ -68,9 +68,15 @@ jobs:
       - name: Set up the environment
         uses: ./.github/actions/setup-python-env
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Build and deploy documentation
         run: |
           uv run mkdocs build -s
-          uv run mkdocs gh-deploy --force
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: uv run mkdocs gh-deploy --force
