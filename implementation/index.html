@@ -1,0 +1,1402 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A MCP wrapper server for OpenAI built-in tools. You can use openai search and computer use on Claude APP!">
+      
+      
+        <meta name="author" content="Yunsung Lee">
+      
+      
+        <link rel="canonical" href="https://alohays.github.io/openai-tool2mcp/implementation/">
+      
+      
+        <link rel="prev" href="../architecture/">
+      
+      
+        <link rel="next" href="../api-reference/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.7">
+    
+    
+      
+        <title>Implementation Guide - openai-tool2mcp</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#implementation-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="openai-tool2mcp" class="md-header__button md-logo" aria-label="openai-tool2mcp" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            openai-tool2mcp
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Implementation Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/alohays/openai-tool2mcp" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    alohays/openai-tool2mcp
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="openai-tool2mcp" class="md-nav__button md-logo" aria-label="openai-tool2mcp" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    openai-tool2mcp
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/alohays/openai-tool2mcp" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    alohays/openai-tool2mcp
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Technical Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Technical Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Architecture Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Implementation Guide
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Implementation Guide
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-mcp-server-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. MCP Server Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-protocol-translation" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Protocol Translation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Protocol Translation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp-to-openai-translation" class="md-nav__link">
+    <span class="md-ellipsis">
+      MCP to OpenAI Translation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openai-to-mcp-translation" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenAI to MCP Translation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-openai-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. OpenAI Client
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-tool-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Tool Registry
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp-protocol-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      MCP Protocol Implementation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the Server
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI Interface
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-tool-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom Tool Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#middleware-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Middleware Support
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-mcp-server-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. MCP Server Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-protocol-translation" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Protocol Translation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Protocol Translation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp-to-openai-translation" class="md-nav__link">
+    <span class="md-ellipsis">
+      MCP to OpenAI Translation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openai-to-mcp-translation" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenAI to MCP Translation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-openai-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. OpenAI Client
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-tool-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Tool Registry
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp-protocol-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      MCP Protocol Implementation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the Server
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI Interface
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-tool-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom Tool Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#middleware-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Middleware Support
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="implementation-guide">Implementation Guide<a class="headerlink" href="#implementation-guide" title="Permanent link">&para;</a></h1>
+<p>This guide provides detailed technical information on implementing the openai-tool2mcp bridge, focusing on code structure, key components, and protocol details.</p>
+<h2 id="project-structure">Project Structure<a class="headerlink" href="#project-structure" title="Permanent link">&para;</a></h2>
+<p>The project follows a modular architecture with the following structure:</p>
+<pre><code>openai_tool2mcp/
+├── __init__.py             # Package exports
+├── server.py               # MCP server implementation
+├── translator/
+│   ├── __init__.py
+│   ├── mcp_to_openai.py    # MCP to OpenAI translation
+│   └── openai_to_mcp.py    # OpenAI to MCP translation
+├── openai_client/
+│   ├── __init__.py
+│   ├── client.py           # OpenAI API client
+│   └── assistants.py       # Assistants API wrapper
+├── tools/
+│   ├── __init__.py
+│   ├── registry.py         # Tool registry
+│   ├── web_search.py       # Web search implementation
+│   ├── code_interpreter.py # Code interpreter implementation
+│   ├── browser.py          # Web browser implementation
+│   └── file_manager.py     # File management implementation
+├── models/
+│   ├── __init__.py
+│   ├── mcp.py              # MCP protocol models
+│   └── openai.py           # OpenAI API models
+└── utils/
+    ├── __init__.py
+    ├── config.py           # Configuration management
+    ├── logging.py          # Logging utilities
+    └── security.py         # Security utilities
+</code></pre>
+<h2 id="core-components">Core Components<a class="headerlink" href="#core-components" title="Permanent link">&para;</a></h2>
+<h3 id="1-mcp-server-implementation">1. MCP Server Implementation<a class="headerlink" href="#1-mcp-server-implementation" title="Permanent link">&para;</a></h3>
+<p>The MCP server is implemented using FastAPI for high performance and compatibility with async operations:</p>
+<pre><code class="language-python">from fastapi import FastAPI, HTTPException, Depends
+from .models.mcp import MCPRequest, MCPResponse
+from .translator import mcp_to_openai, openai_to_mcp
+from .openai_client import OpenAIClient
+from .tools import ToolRegistry
+
+class MCPServer:
+    def __init__(self, config=None):
+        self.app = FastAPI()
+        self.config = config or ServerConfig()
+        self.openai_client = OpenAIClient(self.config.openai_api_key)
+        self.tool_registry = ToolRegistry(self.config.tools)
+
+        # Register routes
+        self.register_routes()
+
+    def register_routes(self):
+        @self.app.post(&quot;/v1/tools/{tool_id}/invoke&quot;)
+        async def invoke_tool(tool_id: str, request: MCPRequest):
+            # Validate tool exists
+            if not self.tool_registry.has_tool(tool_id):
+                raise HTTPException(status_code=404, detail=f&quot;Tool {tool_id} not found&quot;)
+
+            # Translate MCP request to OpenAI format
+            openai_request = mcp_to_openai.translate_request(request, tool_id)
+
+            # Call OpenAI API
+            openai_response = await self.openai_client.invoke_tool(openai_request)
+
+            # Translate OpenAI response to MCP format
+            mcp_response = openai_to_mcp.translate_response(openai_response)
+
+            return mcp_response
+
+    def start(self, host=&quot;127.0.0.1&quot;, port=8000):
+        import uvicorn
+        uvicorn.run(self.app, host=host, port=port)
+</code></pre>
+<h3 id="2-protocol-translation">2. Protocol Translation<a class="headerlink" href="#2-protocol-translation" title="Permanent link">&para;</a></h3>
+<p>The translation layer handles the mapping between MCP and OpenAI formats:</p>
+<h4 id="mcp-to-openai-translation">MCP to OpenAI Translation<a class="headerlink" href="#mcp-to-openai-translation" title="Permanent link">&para;</a></h4>
+<pre><code class="language-python">from ..models.mcp import MCPRequest
+from ..models.openai import OpenAIToolRequest
+
+def translate_request(mcp_request: MCPRequest, tool_id: str) -&gt; OpenAIToolRequest:
+    &quot;&quot;&quot;
+    Translate an MCP request to an OpenAI request format.
+
+    Args:
+        mcp_request: The MCP request to translate
+        tool_id: The ID of the tool to invoke
+
+    Returns:
+        An OpenAI tool request object
+    &quot;&quot;&quot;
+    # Extract tool parameters
+    parameters = mcp_request.parameters
+
+    # Extract context information
+    context = mcp_request.context or {}
+
+    # Determine if this is a new or existing conversation
+    thread_id = context.get(&quot;thread_id&quot;)
+
+    # Create OpenAI request
+    openai_request = OpenAIToolRequest(
+        tool_type=map_tool_id_to_openai_type(tool_id),
+        parameters=parameters,
+        thread_id=thread_id,
+        instructions=context.get(&quot;instructions&quot;, &quot;&quot;)
+    )
+
+    return openai_request
+
+def map_tool_id_to_openai_type(tool_id: str) -&gt; str:
+    &quot;&quot;&quot;Map MCP tool IDs to OpenAI tool types&quot;&quot;&quot;
+    mapping = {
+        &quot;web-search&quot;: &quot;retrieval&quot;,
+        &quot;code-execution&quot;: &quot;code_interpreter&quot;,
+        &quot;browser&quot;: &quot;web_browser&quot;,
+        &quot;file-io&quot;: &quot;file_search&quot;
+    }
+    return mapping.get(tool_id, tool_id)
+</code></pre>
+<h4 id="openai-to-mcp-translation">OpenAI to MCP Translation<a class="headerlink" href="#openai-to-mcp-translation" title="Permanent link">&para;</a></h4>
+<pre><code class="language-python">from ..models.mcp import MCPResponse
+from ..models.openai import OpenAIToolResponse
+
+def translate_response(openai_response: OpenAIToolResponse) -&gt; MCPResponse:
+    &quot;&quot;&quot;
+    Translate an OpenAI response to an MCP response format.
+
+    Args:
+        openai_response: The OpenAI response to translate
+
+    Returns:
+        An MCP response object
+    &quot;&quot;&quot;
+    # Extract tool output
+    tool_output = openai_response.tool_outputs[0] if openai_response.tool_outputs else None
+
+    if not tool_output:
+        return MCPResponse(
+            content=&quot;No result&quot;,
+            error=&quot;Tool returned no output&quot;,
+            context={&quot;thread_id&quot;: openai_response.thread_id}
+        )
+
+    # Create MCP response
+    mcp_response = MCPResponse(
+        content=tool_output.output,
+        error=tool_output.error if hasattr(tool_output, &quot;error&quot;) else None,
+        context={&quot;thread_id&quot;: openai_response.thread_id}
+    )
+
+    return mcp_response
+</code></pre>
+<h3 id="3-openai-client">3. OpenAI Client<a class="headerlink" href="#3-openai-client" title="Permanent link">&para;</a></h3>
+<p>The OpenAI client manages interactions with the OpenAI API:</p>
+<pre><code class="language-python">import openai
+from ..models.openai import OpenAIToolRequest, OpenAIToolResponse
+
+class OpenAIClient:
+    def __init__(self, api_key):
+        self.client = openai.Client(api_key=api_key)
+
+    async def invoke_tool(self, request: OpenAIToolRequest) -&gt; OpenAIToolResponse:
+        &quot;&quot;&quot;
+        Invoke an OpenAI tool.
+
+        Args:
+            request: The tool request
+
+        Returns:
+            The tool response
+        &quot;&quot;&quot;
+        # Create or get thread
+        thread_id = request.thread_id
+        if not thread_id:
+            thread = await self.client.beta.threads.create()
+            thread_id = thread.id
+
+        # Create message with tool call
+        message = await self.client.beta.threads.messages.create(
+            thread_id=thread_id,
+            role=&quot;user&quot;,
+            content=f&quot;Please use the {request.tool_type} tool with these parameters: {request.parameters}&quot;,
+        )
+
+        # Create assistant with the appropriate tool
+        assistant = await self.client.beta.assistants.create(
+            name=&quot;Tool Executor&quot;,
+            instructions=request.instructions or &quot;Execute the requested tool function.&quot;,
+            tools=[{&quot;type&quot;: request.tool_type}],
+            model=&quot;gpt-4-turbo&quot;
+        )
+
+        # Run the assistant
+        run = await self.client.beta.threads.runs.create(
+            thread_id=thread_id,
+            assistant_id=assistant.id
+        )
+
+        # Wait for completion
+        run = await self._wait_for_run(thread_id, run.id)
+
+        # Get tool outputs
+        tool_outputs = run.required_action.submit_tool_outputs.tool_calls if hasattr(run, &quot;required_action&quot;) else []
+
+        # Create response
+        response = OpenAIToolResponse(
+            thread_id=thread_id,
+            tool_outputs=tool_outputs
+        )
+
+        return response
+
+    async def _wait_for_run(self, thread_id, run_id):
+        &quot;&quot;&quot;Wait for a run to complete&quot;&quot;&quot;
+        import time
+
+        while True:
+            run = await self.client.beta.threads.runs.retrieve(
+                thread_id=thread_id,
+                run_id=run_id
+            )
+
+            if run.status in [&quot;completed&quot;, &quot;failed&quot;, &quot;requires_action&quot;]:
+                return run
+
+            time.sleep(1)
+</code></pre>
+<h3 id="4-tool-registry">4. Tool Registry<a class="headerlink" href="#4-tool-registry" title="Permanent link">&para;</a></h3>
+<p>The tool registry manages available tools and their configurations:</p>
+<pre><code class="language-python">from enum import Enum, auto
+from typing import List, Optional
+
+class OpenAIBuiltInTools(Enum):
+    WEB_SEARCH = &quot;retrieval&quot;
+    CODE_INTERPRETER = &quot;code_interpreter&quot;
+    WEB_BROWSER = &quot;web_browser&quot;
+    FILE_SEARCH = &quot;file_search&quot;
+
+class ToolRegistry:
+    def __init__(self, enabled_tools=None):
+        self.tools = {}
+        self.enabled_tools = enabled_tools or [t.value for t in OpenAIBuiltInTools]
+        self._register_default_tools()
+
+    def _register_default_tools(self):
+        &quot;&quot;&quot;Register the default tool mappings&quot;&quot;&quot;
+        self.tools = {
+            &quot;web-search&quot;: {
+                &quot;openai_tool&quot;: OpenAIBuiltInTools.WEB_SEARCH.value,
+                &quot;enabled&quot;: OpenAIBuiltInTools.WEB_SEARCH.value in self.enabled_tools
+            },
+            &quot;code-execution&quot;: {
+                &quot;openai_tool&quot;: OpenAIBuiltInTools.CODE_INTERPRETER.value,
+                &quot;enabled&quot;: OpenAIBuiltInTools.CODE_INTERPRETER.value in self.enabled_tools
+            },
+            &quot;browser&quot;: {
+                &quot;openai_tool&quot;: OpenAIBuiltInTools.WEB_BROWSER.value,
+                &quot;enabled&quot;: OpenAIBuiltInTools.WEB_BROWSER.value in self.enabled_tools
+            },
+            &quot;file-io&quot;: {
+                &quot;openai_tool&quot;: OpenAIBuiltInTools.FILE_SEARCH.value,
+                &quot;enabled&quot;: OpenAIBuiltInTools.FILE_SEARCH.value in self.enabled_tools
+            }
+        }
+
+    def has_tool(self, tool_id: str) -&gt; bool:
+        &quot;&quot;&quot;Check if a tool is registered and enabled&quot;&quot;&quot;
+        return tool_id in self.tools and self.tools[tool_id][&quot;enabled&quot;]
+
+    def get_openai_tool_type(self, tool_id: str) -&gt; Optional[str]:
+        &quot;&quot;&quot;Get the OpenAI tool type for a given MCP tool ID&quot;&quot;&quot;
+        if self.has_tool(tool_id):
+            return self.tools[tool_id][&quot;openai_tool&quot;]
+        return None
+</code></pre>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<p>Configuration is managed through a dedicated ServerConfig class:</p>
+<pre><code class="language-python">from typing import List, Optional
+from .tools import OpenAIBuiltInTools
+
+class ServerConfig:
+    def __init__(
+        self,
+        openai_api_key: Optional[str] = None,
+        tools: Optional[List[str]] = None,
+        request_timeout: int = 30,
+        max_retries: int = 3
+    ):
+        &quot;&quot;&quot;
+        Initialize server configuration.
+
+        Args:
+            openai_api_key: OpenAI API key (defaults to environment variable)
+            tools: List of enabled tools (defaults to all)
+            request_timeout: Timeout for API requests in seconds
+            max_retries: Maximum number of retries for failed requests
+        &quot;&quot;&quot;
+        import os
+
+        self.openai_api_key = openai_api_key or os.environ.get(&quot;OPENAI_API_KEY&quot;)
+        if not self.openai_api_key:
+            raise ValueError(&quot;OpenAI API key is required&quot;)
+
+        self.tools = tools or [t.value for t in OpenAIBuiltInTools]
+        self.request_timeout = request_timeout
+        self.max_retries = max_retries
+</code></pre>
+<h2 id="mcp-protocol-implementation">MCP Protocol Implementation<a class="headerlink" href="#mcp-protocol-implementation" title="Permanent link">&para;</a></h2>
+<p>The implementation follows the MCP protocol specification:</p>
+<pre><code class="language-python">from pydantic import BaseModel, Field
+from typing import Dict, Any, Optional
+
+class MCPRequest(BaseModel):
+    &quot;&quot;&quot;Model for MCP tool request&quot;&quot;&quot;
+    parameters: Dict[str, Any] = Field(default_factory=dict)
+    context: Optional[Dict[str, Any]] = Field(default=None)
+
+class MCPResponse(BaseModel):
+    &quot;&quot;&quot;Model for MCP tool response&quot;&quot;&quot;
+    content: str
+    error: Optional[str] = None
+    context: Optional[Dict[str, Any]] = Field(default_factory=dict)
+</code></pre>
+<h2 id="running-the-server">Running the Server<a class="headerlink" href="#running-the-server" title="Permanent link">&para;</a></h2>
+<p>To run the server with default configuration:</p>
+<pre><code class="language-python">from openai_tool2mcp import MCPServer, ServerConfig, OpenAIBuiltInTools
+
+# Create server with all tools enabled
+config = ServerConfig(
+    tools=[t.value for t in OpenAIBuiltInTools]
+)
+
+# Start server
+server = MCPServer(config)
+server.start(host=&quot;127.0.0.1&quot;, port=8000)
+</code></pre>
+<h2 id="cli-interface">CLI Interface<a class="headerlink" href="#cli-interface" title="Permanent link">&para;</a></h2>
+<p>The package includes a CLI interface for easy server startup:</p>
+<pre><code class="language-python">import argparse
+import os
+from .server import MCPServer, ServerConfig
+from .tools import OpenAIBuiltInTools
+
+def main():
+    parser = argparse.ArgumentParser(description=&quot;Start an MCP server for OpenAI tools&quot;)
+    parser.add_argument(&quot;--host&quot;, default=&quot;127.0.0.1&quot;, help=&quot;Host to listen on&quot;)
+    parser.add_argument(&quot;--port&quot;, type=int, default=8000, help=&quot;Port to listen on&quot;)
+    parser.add_argument(&quot;--api-key&quot;, help=&quot;OpenAI API key (defaults to OPENAI_API_KEY env var)&quot;)
+    parser.add_argument(&quot;--tools&quot;, nargs=&quot;+&quot;, choices=[t.value for t in OpenAIBuiltInTools],
+                        default=[t.value for t in OpenAIBuiltInTools],
+                        help=&quot;Enabled tools&quot;)
+
+    args = parser.parse_args()
+
+    # Create server config
+    config = ServerConfig(
+        openai_api_key=args.api_key or os.environ.get(&quot;OPENAI_API_KEY&quot;),
+        tools=args.tools
+    )
+
+    # Start server
+    server = MCPServer(config)
+    print(f&quot;Starting MCP server on {args.host}:{args.port}&quot;)
+    server.start(host=args.host, port=args.port)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
+<p>Robust error handling is implemented across the system:</p>
+<pre><code class="language-python">class MCPError(Exception):
+    &quot;&quot;&quot;Base class for all MCP errors&quot;&quot;&quot;
+    def __init__(self, message, status_code=500):
+        self.message = message
+        self.status_code = status_code
+        super().__init__(self.message)
+
+class ToolNotFoundError(MCPError):
+    &quot;&quot;&quot;Error raised when a requested tool is not found&quot;&quot;&quot;
+    def __init__(self, tool_id):
+        super().__init__(f&quot;Tool {tool_id} not found&quot;, 404)
+
+class OpenAIError(MCPError):
+    &quot;&quot;&quot;Error raised when there's an issue with the OpenAI API&quot;&quot;&quot;
+    def __init__(self, message, status_code=500):
+        super().__init__(f&quot;OpenAI API error: {message}&quot;, status_code)
+
+class ConfigurationError(MCPError):
+    &quot;&quot;&quot;Error raised when there's an issue with configuration&quot;&quot;&quot;
+    def __init__(self, message):
+        super().__init__(f&quot;Configuration error: {message}&quot;, 500)
+</code></pre>
+<h2 id="advanced-usage">Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permanent link">&para;</a></h2>
+<h3 id="custom-tool-implementation">Custom Tool Implementation<a class="headerlink" href="#custom-tool-implementation" title="Permanent link">&para;</a></h3>
+<p>To implement a custom tool adapter:</p>
+<pre><code class="language-python">from ..models.mcp import MCPRequest, MCPResponse
+from abc import ABC, abstractmethod
+
+class ToolAdapter(ABC):
+    &quot;&quot;&quot;Base class for tool adapters&quot;&quot;&quot;
+
+    @property
+    @abstractmethod
+    def tool_id(self) -&gt; str:
+        &quot;&quot;&quot;Get the MCP tool ID&quot;&quot;&quot;
+        pass
+
+    @property
+    @abstractmethod
+    def openai_tool_type(self) -&gt; str:
+        &quot;&quot;&quot;Get the OpenAI tool type&quot;&quot;&quot;
+        pass
+
+    @abstractmethod
+    async def translate_request(self, request: MCPRequest) -&gt; dict:
+        &quot;&quot;&quot;Translate MCP request to OpenAI parameters&quot;&quot;&quot;
+        pass
+
+    @abstractmethod
+    async def translate_response(self, response: dict) -&gt; MCPResponse:
+        &quot;&quot;&quot;Translate OpenAI response to MCP response&quot;&quot;&quot;
+        pass
+
+# Example implementation for web search
+class WebSearchAdapter(ToolAdapter):
+    @property
+    def tool_id(self) -&gt; str:
+        return &quot;web-search&quot;
+
+    @property
+    def openai_tool_type(self) -&gt; str:
+        return &quot;retrieval&quot;
+
+    async def translate_request(self, request: MCPRequest) -&gt; dict:
+        # Extract search query
+        query = request.parameters.get(&quot;query&quot;, &quot;&quot;)
+
+        # Return OpenAI parameters
+        return {&quot;query&quot;: query}
+
+    async def translate_response(self, response: dict) -&gt; MCPResponse:
+        # Extract search results
+        results = response.get(&quot;results&quot;, [])
+
+        # Format results as markdown
+        content = &quot;# Search Results\n\n&quot;
+        for i, result in enumerate(results):
+            content += f&quot;## {i+1}. {result.get('title', 'No title')}\n&quot;
+            content += f&quot;**URL**: {result.get('url', 'No URL')}\n&quot;
+            content += f&quot;{result.get('snippet', 'No snippet')}\n\n&quot;
+
+        # Return MCP response
+        return MCPResponse(
+            content=content,
+            context={&quot;search_query&quot;: query}
+        )
+</code></pre>
+<h3 id="middleware-support">Middleware Support<a class="headerlink" href="#middleware-support" title="Permanent link">&para;</a></h3>
+<p>Middleware can be used to add cross-cutting functionality:</p>
+<pre><code class="language-python">from starlette.middleware.base import BaseHTTPMiddleware
+from fastapi import FastAPI
+
+class LoggingMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+        # Log request
+        print(f&quot;Request: {request.method} {request.url}&quot;)
+
+        # Call next middleware
+        response = await call_next(request)
+
+        # Log response
+        print(f&quot;Response: {response.status_code}&quot;)
+
+        return response
+
+def add_middleware(app: FastAPI):
+    &quot;&quot;&quot;Add middleware to FastAPI app&quot;&quot;&quot;
+    app.add_middleware(LoggingMiddleware)
+</code></pre>
+<p>This implementation guide provides a comprehensive blueprint for building the openai-tool2mcp bridge. By following this architecture and implementation details, you can create a fully functional MCP server that leverages OpenAI's powerful built-in tools.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Maintained by <a href="https://alohays.com">alohays</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/alohays/openai-tool2mcp" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/openai-tool2mcp" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
