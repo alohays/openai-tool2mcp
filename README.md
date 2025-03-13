@@ -14,6 +14,12 @@
 - 🛠️ **Simple API for easy integration**
 - 🌐 **Full compatibility with the MCP SDK**
 
+## 🔍 OpenAI Search Integration Demo with Claude App! 🚀
+
+https://github.com/user-attachments/assets/f1f10e2c-b995-4e03-8b28-61eeb2b2bfe9
+
+OpenAI tried to keep their powerful, LLM-optimized tools locked within their own agent platform, but they couldn't stop the unstoppable open-source movement of MCP!
+
 ## The Developer's Dilemma
 
 AI developers currently face a challenging choice between two ecosystems:
