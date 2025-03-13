@@ -1,10 +1,10 @@
 from ..models.mcp import MCPRequest
-from ..models.openai import OpenAIToolRequest
+from ..models.openai import ToolRequest
 from ..utils.logging import logger
 from ..utils.security import sanitize_parameters
 
 
-def translate_request(mcp_request: MCPRequest, tool_id: str) -> OpenAIToolRequest:
+def translate_request(mcp_request: MCPRequest, tool_id: str) -> ToolRequest:
     """
     Translate an MCP request to an OpenAI request format.
 
@@ -28,7 +28,7 @@ def translate_request(mcp_request: MCPRequest, tool_id: str) -> OpenAIToolReques
     logger.debug(f"Translating MCP request for tool {tool_id} to OpenAI format")
 
     # Create OpenAI request
-    openai_request = OpenAIToolRequest(
+    openai_request = ToolRequest(
         tool_type=map_tool_id_to_openai_type(tool_id),
         parameters=parameters,
         thread_id=thread_id,

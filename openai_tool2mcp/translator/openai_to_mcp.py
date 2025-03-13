@@ -2,11 +2,11 @@ import json
 from typing import Any, Union
 
 from ..models.mcp import MCPResponse
-from ..models.openai import OpenAIToolResponse
+from ..models.openai import ToolResponse
 from ..utils.logging import logger
 
 
-def translate_response(openai_response: OpenAIToolResponse) -> MCPResponse:
+def translate_response(openai_response: ToolResponse) -> MCPResponse:
     """
     Translate an OpenAI response to an MCP response format.
 
