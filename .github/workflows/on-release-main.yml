@@ -5,7 +5,6 @@ on:
     types: [published]
 
 jobs:
-
   set-version:
     runs-on: ubuntu-24.04
     steps:
@@ -61,6 +60,11 @@ jobs:
 
       - name: Set up the environment
         uses: ./.github/actions/setup-python-env
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Deploy documentation
         run: uv run mkdocs gh-deploy --force

@@ -73,7 +73,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Build and deploy documentation
+      - name: Build documentation
         run: |
           uv run mkdocs build -s
 
