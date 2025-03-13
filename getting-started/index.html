@@ -347,9 +347,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#from-pypi-recommended" class="md-nav__link">
+  <a href="#using-uv-recommended-for-mcp-compatibility" class="md-nav__link">
     <span class="md-ellipsis">
-      From PyPI (Recommended)
+      Using uv (Recommended for MCP compatibility)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-pypi" class="md-nav__link">
+    <span class="md-ellipsis">
+      From PyPI
     </span>
   </a>
   
@@ -394,6 +403,30 @@
       2. Start the MCP Server
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="2. Start the MCP Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-uv-recommended-for-mcp-compatibility_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using uv (Recommended for MCP compatibility)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using the CLI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -689,6 +722,28 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uv-integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using with uv
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -763,9 +818,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#from-pypi-recommended" class="md-nav__link">
+  <a href="#using-uv-recommended-for-mcp-compatibility" class="md-nav__link">
     <span class="md-ellipsis">
-      From PyPI (Recommended)
+      Using uv (Recommended for MCP compatibility)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-pypi" class="md-nav__link">
+    <span class="md-ellipsis">
+      From PyPI
     </span>
   </a>
   
@@ -810,6 +874,30 @@
       2. Start the MCP Server
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="2. Start the MCP Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-uv-recommended-for-mcp-compatibility_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using uv (Recommended for MCP compatibility)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using the CLI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1019,12 +1107,22 @@
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p>Before you begin, make sure you have:</p>
 <ul>
-<li>Python 3.9 or higher</li>
+<li>Python 3.10 or higher</li>
 <li>An OpenAI API key with access to the Assistant API</li>
 <li>A MCP-compatible client (like Claude App)</li>
+<li>(Recommended) <code>uv</code> package manager for MCP compatibility</li>
 </ul>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<h3 id="from-pypi-recommended">From PyPI (Recommended)<a class="headerlink" href="#from-pypi-recommended" title="Permanent link">&para;</a></h3>
+<h3 id="using-uv-recommended-for-mcp-compatibility">Using uv (Recommended for MCP compatibility)<a class="headerlink" href="#using-uv-recommended-for-mcp-compatibility" title="Permanent link">&para;</a></h3>
+<p>The <a href="https://modelcontextprotocol.io/">Model Context Protocol (MCP)</a> recommends using <code>uv</code> for package management and execution:</p>
+<pre><code class="language-bash"># Install uv if you don't have it
+pip install uv
+
+# Install openai-tool2mcp using uv
+uv pip install openai-tool2mcp
+</code></pre>
+<p>For more details on using <code>uv</code> with openai-tool2mcp, see our <a href="../uv-integration/">dedicated guide</a>.</p>
+<h3 id="from-pypi">From PyPI<a class="headerlink" href="#from-pypi" title="Permanent link">&para;</a></h3>
 <pre><code class="language-bash">pip install openai-tool2mcp
 </code></pre>
 <h3 id="from-source">From Source<a class="headerlink" href="#from-source" title="Permanent link">&para;</a></h3>
@@ -1050,14 +1148,14 @@ $env:OPENAI_API_KEY=&quot;your-api-key-here&quot;
 <pre><code>OPENAI_API_KEY=your-api-key-here
 </code></pre>
 <h3 id="2-start-the-mcp-server">2. Start the MCP Server<a class="headerlink" href="#2-start-the-mcp-server" title="Permanent link">&para;</a></h3>
-<p>The simplest way to start the server is using the command-line interface:</p>
-<pre><code class="language-bash"># Start with all tools enabled
-openai-tool2mcp start
-
-# Start with specific tools
-openai-tool2mcp start --tools retrieval code_interpreter
+<h4 id="using-uv-recommended-for-mcp-compatibility_1">Using uv (Recommended for MCP compatibility)<a class="headerlink" href="#using-uv-recommended-for-mcp-compatibility_1" title="Permanent link">&para;</a></h4>
+<pre><code class="language-bash"># Start the server using the standalone entry script
+uv run openai_tool2mcp/server_entry.py --transport stdio
 </code></pre>
-<p>The server will start on <code>http://localhost:8000</code> by default.</p>
+<h4 id="using-the-cli">Using the CLI<a class="headerlink" href="#using-the-cli" title="Permanent link">&para;</a></h4>
+<pre><code class="language-bash"># Alternative: Using the CLI
+openai-tool2mcp start --transport stdio
+</code></pre>
 <h3 id="3-connect-your-mcp-client">3. Connect Your MCP Client<a class="headerlink" href="#3-connect-your-mcp-client" title="Permanent link">&para;</a></h3>
 <p>Configure your MCP-compatible client to connect to your local server:</p>
 <ul>

@@ -12,26 +12,28 @@
         <meta name="author" content="Yunsung Lee">
       
       
-        <link rel="canonical" href="https://alohays.github.io/openai-tool2mcp/">
+        <link rel="canonical" href="https://alohays.github.io/openai-tool2mcp/uv-integration/">
       
       
+        <link rel="prev" href="../api-reference/">
       
-        <link rel="next" href="getting-started/">
+      
+        <link rel="next" href="../modules/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.7">
     
     
       
-        <title>openai-tool2mcp</title>
+        <title>Using with uv - openai-tool2mcp</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.8608ea7d.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.8608ea7d.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -50,9 +52,9 @@
       
     
     
-      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#openai-tool2mcp" class="md-skip">
+        <a href="#using-uv-with-openai-tool2mcp" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +96,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="openai-tool2mcp" class="md-header__button md-logo" aria-label="openai-tool2mcp" data-md-component="logo">
+    <a href=".." title="openai-tool2mcp" class="md-header__button md-logo" aria-label="openai-tool2mcp" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -114,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Using with uv
             
           </span>
         </div>
@@ -227,7 +229,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="openai-tool2mcp" class="md-nav__button md-logo" aria-label="openai-tool2mcp" data-md-component="logo">
+    <a href=".." title="openai-tool2mcp" class="md-nav__button md-logo" aria-label="openai-tool2mcp" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -254,6 +256,152 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Technical Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Technical Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Architecture Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../implementation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Implementation Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -270,7 +418,7 @@
           
   
   <span class="md-ellipsis">
-    Home
+    Using with uv
     
   </span>
   
@@ -278,11 +426,11 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="." class="md-nav__link md-nav__link--active">
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Home
+    Using with uv
     
   </span>
   
@@ -305,47 +453,104 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-openai-tool2mcp" class="md-nav__link">
+  <a href="#why-use-uv" class="md-nav__link">
     <span class="md-ellipsis">
-      Why openai-tool2mcp?
+      Why use uv?
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-features" class="md-nav__link">
+  <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
-      Key Features
+      Installation
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#supported-tools" class="md-nav__link">
+  <a href="#running-the-server-with-uv" class="md-nav__link">
     <span class="md-ellipsis">
-      Supported Tools
+      Running the Server with uv
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running the Server with uv">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-using-the-standalone-entry-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Using the Standalone Entry Script
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-creating-your-own-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Creating Your Own Script
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-claude-for-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Claude for Desktop
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#technical-architecture" class="md-nav__link">
+  <a href="#advanced-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Technical Architecture
+      Advanced Configuration
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
+  <a href="#troubleshooting" class="md-nav__link">
     <span class="md-ellipsis">
-      Quick Start
+      Troubleshooting
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -353,150 +558,6 @@
   
 </nav>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="getting-started/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Getting Started
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Technical Documentation
-    
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            Technical Documentation
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="architecture/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Architecture Overview
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="implementation/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Implementation Guide
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api-reference/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    API Reference
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="uv-integration/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Using with uv
-    
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -516,7 +577,7 @@
   
   
     <li class="md-nav__item">
-      <a href="modules/" class="md-nav__link">
+      <a href="../modules/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -557,47 +618,104 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-openai-tool2mcp" class="md-nav__link">
+  <a href="#why-use-uv" class="md-nav__link">
     <span class="md-ellipsis">
-      Why openai-tool2mcp?
+      Why use uv?
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-features" class="md-nav__link">
+  <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
-      Key Features
+      Installation
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#supported-tools" class="md-nav__link">
+  <a href="#running-the-server-with-uv" class="md-nav__link">
     <span class="md-ellipsis">
-      Supported Tools
+      Running the Server with uv
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running the Server with uv">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-using-the-standalone-entry-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Using the Standalone Entry Script
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-creating-your-own-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Creating Your Own Script
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-claude-for-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Claude for Desktop
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#technical-architecture" class="md-nav__link">
+  <a href="#advanced-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Technical Architecture
+      Advanced Configuration
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
+  <a href="#troubleshooting" class="md-nav__link">
     <span class="md-ellipsis">
-      Quick Start
+      Troubleshooting
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -620,77 +738,121 @@
   
 
 
-<h1 id="openai-tool2mcp">openai-tool2mcp<a class="headerlink" href="#openai-tool2mcp" title="Permanent link">&para;</a></h1>
-<p><a href="https://img.shields.io/github/v/release/alohays/openai-tool2mcp"><img alt="Release" src="https://img.shields.io/github/v/release/alohays/openai-tool2mcp" /></a>
-<a href="https://github.com/alohays/openai-tool2mcp/actions/workflows/main.yml?query=branch%3Amain"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/alohays/openai-tool2mcp/main.yml?branch=main" /></a>
-<a href="https://img.shields.io/github/commit-activity/m/alohays/openai-tool2mcp"><img alt="Commit activity" src="https://img.shields.io/github/commit-activity/m/alohays/openai-tool2mcp" /></a>
-<a href="https://img.shields.io/github/license/alohays/openai-tool2mcp"><img alt="License" src="https://img.shields.io/github/license/alohays/openai-tool2mcp" /></a></p>
-<p><strong>openai-tool2mcp</strong> is a lightweight, open-source bridge that wraps OpenAI's powerful built-in tools as Model Context Protocol (MCP) servers. It enables you to use high-quality OpenAI tools like web search and code interpreter with Claude and other MCP-compatible models.</p>
-<h2 id="why-openai-tool2mcp">Why openai-tool2mcp?<a class="headerlink" href="#why-openai-tool2mcp" title="Permanent link">&para;</a></h2>
-<p>AI developers today face a challenging choice:</p>
-<ol>
-<li><strong>OpenAI's ecosystem</strong>: Offers powerful built-in tools like web search and code interpreter, but ties you to a closed platform</li>
-<li><strong>MCP ecosystem</strong>: Provides an open standard for interoperability, but lacks the advanced tools available in OpenAI</li>
-</ol>
-<p><strong>openai-tool2mcp</strong> bridges this gap by letting you use OpenAI's mature, high-quality tools within the open MCP ecosystem, giving you the best of both worlds.</p>
-<h2 id="key-features">Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h2>
+<h1 id="using-uv-with-openai-tool2mcp">Using uv with openai-tool2mcp<a class="headerlink" href="#using-uv-with-openai-tool2mcp" title="Permanent link">&para;</a></h1>
+<p>The <a href="https://modelcontextprotocol.io/">Model Context Protocol (MCP)</a> recommends using <code>uv</code> as the package manager and execution environment for MCP servers. This guide explains how to integrate <code>openai-tool2mcp</code> with <code>uv</code> for optimal MCP compatibility.</p>
+<h2 id="why-use-uv">Why use uv?<a class="headerlink" href="#why-use-uv" title="Permanent link">&para;</a></h2>
+<p><code>uv</code> is a fast, reliable Python package manager and execution environment that provides:</p>
 <ul>
-<li>🔍 <strong>Use OpenAI's robust web search in Claude App</strong></li>
-<li>💻 <strong>Access code interpreter functionality in any MCP-compatible LLM</strong></li>
-<li>🔄 <strong>Seamless protocol translation between OpenAI and MCP</strong></li>
-<li>🛠️ <strong>Simple API for easy integration</strong></li>
+<li>Reproducible installations with exact dependency resolution</li>
+<li>Isolated execution environments for each project</li>
+<li>Improved compatibility with the Claude Desktop app and other MCP-compatible clients</li>
+<li>Simplified configuration for MCP servers</li>
 </ul>
-<h2 id="supported-tools">Supported Tools<a class="headerlink" href="#supported-tools" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>OpenAI Tool</th>
-<th>MCP Equivalent</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Web Search</td>
-<td>Web Search</td>
-<td>✅ Implemented</td>
-</tr>
-<tr>
-<td>Code Interpreter</td>
-<td>Code Execution</td>
-<td>✅ Implemented</td>
-</tr>
-<tr>
-<td>Web Browser</td>
-<td>Browser</td>
-<td>✅ Implemented</td>
-</tr>
-<tr>
-<td>File Management</td>
-<td>File I/O</td>
-<td>✅ Implemented</td>
-</tr>
-</tbody>
-</table>
-<h2 id="technical-architecture">Technical Architecture<a class="headerlink" href="#technical-architecture" title="Permanent link">&para;</a></h2>
-<p>openai-tool2mcp works by:</p>
-<ol>
-<li>Exposing an MCP-compatible server interface</li>
-<li>Translating MCP requests to OpenAI Assistant API calls</li>
-<li>Converting OpenAI tool responses back to MCP format</li>
-<li>Delivering results to MCP clients like Claude App</li>
-</ol>
-<p>For detailed technical information, see the <a href="architecture/">Architecture Overview</a> and <a href="implementation/">Implementation Guide</a>.</p>
-<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
-<pre><code class="language-bash"># Install from PyPI
-pip install openai-tool2mcp
-
-# Start the server with your OpenAI API key
-OPENAI_API_KEY=&quot;your-api-key&quot; openai-tool2mcp start
-
-# Connect Claude App to http://localhost:8000
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<p>First, install <code>uv</code> if you haven't already:</p>
+<pre><code class="language-bash">pip install uv
 </code></pre>
-<p>Ready to get started? Check out our <a href="getting-started/">Getting Started Guide</a> for detailed instructions.</p>
+<p>Then, install <code>openai-tool2mcp</code> using <code>uv</code>:</p>
+<pre><code class="language-bash">uv pip install openai-tool2mcp
+</code></pre>
+<h2 id="running-the-server-with-uv">Running the Server with uv<a class="headerlink" href="#running-the-server-with-uv" title="Permanent link">&para;</a></h2>
+<p>There are two main ways to run <code>openai-tool2mcp</code> with <code>uv</code>:</p>
+<h3 id="1-using-the-standalone-entry-script">1. Using the Standalone Entry Script<a class="headerlink" href="#1-using-the-standalone-entry-script" title="Permanent link">&para;</a></h3>
+<p>The package provides a standalone entry script that can be run directly with <code>uv</code>:</p>
+<pre><code class="language-bash">uv run openai_tool2mcp/server_entry.py --transport stdio
+</code></pre>
+<p>This approach is recommended for MCP compatibility as it matches the execution model expected by the MCP protocol.</p>
+<h3 id="2-creating-your-own-script">2. Creating Your Own Script<a class="headerlink" href="#2-creating-your-own-script" title="Permanent link">&para;</a></h3>
+<p>You can also create your own script and run it with <code>uv</code>:</p>
+<pre><code class="language-python"># my_openai_tools_server.py
+import os
+from dotenv import load_dotenv
+from openai_tool2mcp import MCPServer, ServerConfig, OpenAIBuiltInTools
+
+# Load environment variables
+load_dotenv()
+
+# Create a server config with desired tools
+config = ServerConfig(
+    openai_api_key=os.environ.get(&quot;OPENAI_API_KEY&quot;),
+    tools=[
+        OpenAIBuiltInTools.WEB_SEARCH.value,
+        OpenAIBuiltInTools.CODE_INTERPRETER.value,
+    ]
+)
+
+# Create and start the server
+server = MCPServer(config)
+server.start(transport=&quot;stdio&quot;)
+</code></pre>
+<p>Run this script with:</p>
+<pre><code class="language-bash">uv run my_openai_tools_server.py
+</code></pre>
+<h2 id="configuring-claude-for-desktop">Configuring Claude for Desktop<a class="headerlink" href="#configuring-claude-for-desktop" title="Permanent link">&para;</a></h2>
+<p>To configure Claude for Desktop to use <code>openai-tool2mcp</code> with <code>uv</code>, edit your <code>claude_desktop_config.json</code> file:</p>
+<pre><code class="language-json">{
+  &quot;mcpServers&quot;: {
+    &quot;openai-tools&quot;: {
+      &quot;command&quot;: &quot;uv&quot;,
+      &quot;args&quot;: [
+        &quot;--directory&quot;,
+        &quot;/absolute/path/to/your/openai-tool2mcp&quot;,
+        &quot;run&quot;,
+        &quot;openai_tool2mcp/server_entry.py&quot;
+      ]
+    }
+  }
+}
+</code></pre>
+<p>The config file is located at:</p>
+<ul>
+<li>MacOS: <code>~/Library/Application Support/Claude/claude_desktop_config.json</code></li>
+<li>Windows: <code>%AppData%\Claude\claude_desktop_config.json</code></li>
+</ul>
+<h2 id="advanced-configuration">Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Permanent link">&para;</a></h2>
+<p>You can pass additional arguments to the server by adding them to the <code>args</code> array:</p>
+<pre><code class="language-json">{
+  &quot;mcpServers&quot;: {
+    &quot;openai-tools&quot;: {
+      &quot;command&quot;: &quot;uv&quot;,
+      &quot;args&quot;: [
+        &quot;--directory&quot;,
+        &quot;/absolute/path/to/your/openai-tool2mcp&quot;,
+        &quot;run&quot;,
+        &quot;openai_tool2mcp/server_entry.py&quot;,
+        &quot;--tools&quot;,
+        &quot;web_search&quot;,
+        &quot;code_interpreter&quot;
+      ]
+    }
+  }
+}
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="common-issues">Common Issues<a class="headerlink" href="#common-issues" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Path Not Found</strong>: Ensure you're using the absolute path to your openai-tool2mcp installation</li>
+<li><strong>Missing Dependencies</strong>: Make sure all dependencies are installed with <code>uv pip install -e .</code></li>
+<li><strong>API Key Issues</strong>: Verify that your OpenAI API key is properly set in the environment</li>
+</ol>
+<h3 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">&para;</a></h3>
+<p>To enable debugging output, add the <code>--log-level debug</code> argument:</p>
+<pre><code class="language-json">{
+  &quot;mcpServers&quot;: {
+    &quot;openai-tools&quot;: {
+      &quot;command&quot;: &quot;uv&quot;,
+      &quot;args&quot;: [
+        &quot;--directory&quot;,
+        &quot;/absolute/path/to/your/openai-tool2mcp&quot;,
+        &quot;run&quot;,
+        &quot;openai_tool2mcp/server_entry.py&quot;,
+        &quot;--log-level&quot;,
+        &quot;debug&quot;
+      ]
+    }
+  }
+}
+</code></pre>
 
 
 
@@ -767,10 +929,10 @@ OPENAI_API_KEY=&quot;your-api-key&quot; openai-tool2mcp start
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
       
     
   </body>

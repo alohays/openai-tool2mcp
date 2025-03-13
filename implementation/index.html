@@ -601,6 +601,28 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uv-integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using with uv
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1025,7 +1047,7 @@ class OpenAIClient:
             name=&quot;Tool Executor&quot;,
             instructions=request.instructions or &quot;Execute the requested tool function.&quot;,
             tools=[{&quot;type&quot;: request.tool_type}],
-            model=&quot;gpt-4-turbo&quot;
+            model=&quot;gpt-4o-mini-search-preview&quot;
         )
 
         # Run the assistant
