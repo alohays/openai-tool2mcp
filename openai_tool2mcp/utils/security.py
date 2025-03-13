@@ -21,7 +21,7 @@ def validate_api_key(api_key: str) -> bool:
     return bool(api_key.startswith(("sk-", "org-")))
 
 
-def sanitize_parameters(parameters):
+def sanitize_parameters(parameters: dict) -> dict:
     """
     Sanitize parameters to prevent injection attacks.
 

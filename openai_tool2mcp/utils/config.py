@@ -42,7 +42,7 @@ class ServerConfig:
         self.max_retries = max_retries
 
 
-def load_config(config_file=None):
+def load_config(config_file=None) -> dict:
     """
     Load configuration from file.
 
