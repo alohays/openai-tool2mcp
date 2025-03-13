@@ -7,6 +7,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
+# Add permissions to allow GitHub Actions to push to gh-pages branch
+permissions:
+  contents: write
+
 jobs:
   quality:
     runs-on: ubuntu-latest
@@ -58,6 +62,8 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for .GitInfo and .Lastmod
 
       - name: Set up the environment
         uses: ./.github/actions/setup-python-env
@@ -66,3 +72,5 @@ jobs:
         run: |
           uv run mkdocs build -s
           uv run mkdocs gh-deploy --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
