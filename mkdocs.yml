@@ -9,6 +9,11 @@ copyright: Maintained by <a href="https://alohays.com">alohays</a>.
 
 nav:
   - Home: index.md
+  - Getting Started: getting-started.md
+  - Technical Documentation:
+      - Architecture Overview: architecture.md
+      - Implementation Guide: implementation.md
+      - API Reference: api-reference.md
   - Modules: modules.md
 plugins:
   - search
