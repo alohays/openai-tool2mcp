@@ -4,7 +4,7 @@ from enum import Enum
 class OpenAIBuiltInTools(Enum):
     """Enum for built-in OpenAI tools"""
 
-    WEB_SEARCH = "retrieval"
+    WEB_SEARCH = "web_search"
     CODE_INTERPRETER = "code_interpreter"
     WEB_BROWSER = "web_browser"
     FILE_SEARCH = "file_search"
