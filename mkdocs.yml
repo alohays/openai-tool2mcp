@@ -1,0 +1,52 @@
+site_name: openai-tool2mcp
+repo_url: https://github.com/alohays/openai-tool2mcp
+site_url: https://alohays.github.io/openai-tool2mcp
+site_description: A MCP wrapper server for OpenAI built-in tools. You can use openai search and computer use on Claude APP!
+site_author: Yunsung Lee
+edit_uri: edit/main/docs/
+repo_name: alohays/openai-tool2mcp
+copyright: Maintained by <a href="https://alohays.com">alohays</a>.
+
+nav:
+  - Home: index.md
+  - Modules: modules.md
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: ["openai_tool2mcp"]
+theme:
+  name: material
+  feature:
+    tabs: true
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: white
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/alohays/openai-tool2mcp
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/openai-tool2mcp
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
