@@ -6,69 +6,212 @@
 [![Commit activity](https://img.shields.io/github/commit-activity/m/alohays/openai-tool2mcp)](https://img.shields.io/github/commit-activity/m/alohays/openai-tool2mcp)
 [![License](https://img.shields.io/github/license/alohays/openai-tool2mcp)](https://img.shields.io/github/license/alohays/openai-tool2mcp)
 
-A MCP wrapper server for OpenAI built-in tools. You can use openai search and computer use on Claude APP!
+**openai-tool2mcp** is a lightweight, open-source bridge that wraps OpenAI's powerful built-in tools as Model Context Protocol (MCP) servers. It enables you to use high-quality OpenAI tools like web search and code interpreter with Claude and other MCP-compatible models.
 
-- **Github repository**: <https://github.com/alohays/openai-tool2mcp/>
-- **Documentation** <https://alohays.github.io/openai-tool2mcp/>
+- 🔍 **Use OpenAI's robust web search in Claude App**
+- 💻 **Access code interpreter functionality in any MCP-compatible LLM**
+- 🔄 **Seamless protocol translation between OpenAI and MCP**
+- 🛠️ **Simple API for easy integration**
 
-## Getting started with your project
+## The Developer's Dilemma
 
-### 1. Create a New Repository
+AI developers currently face a challenging choice between two ecosystems:
 
-First, create a repository on GitHub with the same name as this project, and then run the following commands:
+```mermaid
+graph TD
+    subgraph "Developer's Dilemma"
+        style Developer fill:#ff9e64,stroke:#fff,stroke-width:2px
+        Developer((Developer))
+    end
 
-```bash
-git init -b main
-git add .
-git commit -m "init commit"
-git remote add origin git@github.com:alohays/openai-tool2mcp.git
-git push -u origin main
+    subgraph "OpenAI's Ecosystem"
+        style OpenAITools fill:#bb9af7,stroke:#fff,stroke-width:2px
+        style Tracing fill:#bb9af7,stroke:#fff,stroke-width:2px
+        style Evaluation fill:#bb9af7,stroke:#fff,stroke-width:2px
+        style VendorLock fill:#f7768e,stroke:#fff,stroke-width:2px,stroke-dasharray: 5 5
+
+        OpenAITools["Built-in Tools<br/>(Web Search, Code Interpreter)"]
+        Tracing["Advanced Tracing<br/>(Visual Debugging)"]
+        Evaluation["Evaluation Dashboards<br/>(Performance Metrics)"]
+        VendorLock["Vendor Lock-in<br/>⚠️ Closed Source ⚠️"]
+
+        OpenAITools --> Tracing
+        Tracing --> Evaluation
+        OpenAITools -.-> VendorLock
+        Tracing -.-> VendorLock
+        Evaluation -.-> VendorLock
+    end
+
+    subgraph "MCP Ecosystem"
+        style MCPStandard fill:#7dcfff,stroke:#fff,stroke-width:2px
+        style MCPTools fill:#7dcfff,stroke:#fff,stroke-width:2px
+        style OpenStandard fill:#9ece6a,stroke:#fff,stroke-width:2px
+        style LimitedTools fill:#f7768e,stroke:#fff,stroke-width:2px,stroke-dasharray: 5 5
+
+        MCPStandard["Model Context Protocol<br/>(Open Standard)"]
+        MCPTools["MCP-compatible Tools"]
+        OpenStandard["Open Ecosystem<br/>✅ Interoperability ✅"]
+        LimitedTools["Limited Tool Quality<br/>⚠️ Less Mature (e.g., web search, computer use) ⚠️"]
+
+        MCPStandard --> MCPTools
+        MCPStandard --> OpenStandard
+        MCPTools -.-> LimitedTools
+    end
+
+    Developer -->|"Wants powerful tools<br/>& visualizations"| OpenAITools
+    Developer -->|"Wants open standards<br/>& interoperability"| MCPStandard
+
+    classDef highlight fill:#ff9e64,stroke:#fff,stroke-width:4px;
+    class Developer highlight
 ```
 
-### 2. Set Up Your Development Environment
+**openai-tool2mcp** bridges this gap by letting you use OpenAI's mature, high-quality tools within the open MCP ecosystem.
 
-Then, install the environment and the pre-commit hooks with
+## 🌟 Features
+
+- **Easy Setup**: Get up and running with a few simple commands
+- **OpenAI Tools as MCP Servers**: Wrap powerful OpenAI built-in tools as MCP-compliant servers
+- **Seamless Integration**: Works with Claude App and other MCP-compatible clients
+- **Tool Support**:
+  - 🔍 Web Search
+  - 💻 Code Interpreter
+  - 🌐 Web Browser
+  - 📁 File Management
+- **Open Source**: MIT licensed, hackable and extensible
+
+## 🚀 Installation
 
 ```bash
+# Install from PyPI
+pip install openai-tool2mcp
+
+# Or install the latest development version
+pip install git+https://github.com/alohays/openai-tool2mcp.git
+```
+
+### Prerequisites
+
+- Python 3.9+
+- OpenAI API key with access to the Assistant API
+
+## 🛠️ Quick Start
+
+1. **Set your OpenAI API key**:
+
+```bash
+export OPENAI_API_KEY="your-api-key-here"
+```
+
+2. **Start the MCP server with OpenAI tools**:
+
+```bash
+openai-tool2mcp start
+```
+
+3. **Use the tools in Claude App**:
+
+Set up your Claude App to connect to your local MCP server at `http://localhost:8000`.
+
+## 💻 Usage Examples
+
+### Basic Server Configuration
+
+```python
+from openai_tool2mcp import MCPServer
+from openai_tool2mcp.tools import OpenAIBuiltInTools
+
+# Create a server with OpenAI web search
+server = MCPServer(tools=[OpenAIBuiltInTools.WEB_SEARCH])
+
+# Start the server
+server.start(host="127.0.0.1", port=8000)
+```
+
+### Custom Configuration
+
+```python
+from openai_tool2mcp import MCPServer, ServerConfig
+from openai_tool2mcp.tools import OpenAIBuiltInTools
+
+# Configure with multiple tools
+config = ServerConfig(
+    openai_api_key="your-api-key",
+    tools=[
+        OpenAIBuiltInTools.WEB_SEARCH,
+        OpenAIBuiltInTools.CODE_INTERPRETER
+    ],
+    request_timeout=60
+)
+
+# Create and start server
+server = MCPServer(config=config)
+server.start()
+```
+
+## 📊 How It Works
+
+The library serves as a bridge between the OpenAI Assistant API and the MCP protocol:
+
+```mermaid
+sequenceDiagram
+    participant Claude as "Claude App"
+    participant MCP as "MCP Client"
+    participant Server as "openai-tool2mcp Server"
+    participant OpenAI as "OpenAI API"
+
+    Claude->>MCP: User query requiring tools
+    MCP->>Server: MCP request
+    Server->>OpenAI: Convert to OpenAI format
+    OpenAI->>Server: Tool response
+    Server->>MCP: Convert to MCP format
+    MCP->>Claude: Display result
+```
+
+## 🤝 Contributing
+
+We welcome contributions from the community! Here's how you can help:
+
+1. **Fork** the repository
+2. **Clone** your fork to your local machine
+3. **Create a branch** for your feature or bugfix
+4. **Make your changes** and commit them
+5. **Push** to your fork and submit a **pull request**
+
+Please make sure to follow our coding standards and add tests for any new features.
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/alohays/openai-tool2mcp.git
+cd openai-tool2mcp
+
+# Install in development mode
 make install
+
+# Run tests
+make test
+
+# Run linting
+make lint
 ```
 
-This will also generate your `uv.lock` file
+## 📄 License
 
-### 3. Run the pre-commit hooks
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Initially, the CI/CD pipeline might be failing due to formatting issues. To resolve those run:
+## 🙏 Acknowledgements
 
-```bash
-uv run pre-commit run -a
-```
-
-### 4. Commit the changes
-
-Lastly, commit the changes made by the two steps above to your repository.
-
-```bash
-git add .
-git commit -m 'Fix formatting issues'
-git push origin main
-```
-
-You are now ready to start development on your project!
-The CI/CD pipeline will be triggered when you open a pull request, merge to main, or when you create a new release.
-
-To finalize the set-up for publishing to PyPI, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/publishing/#set-up-for-pypi).
-For activating the automatic documentation with MkDocs, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/mkdocs/#enabling-the-documentation-on-github).
-To enable the code coverage reports, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/codecov/).
-
-## Releasing a new version
-
-- Create an API Token on [PyPI](https://pypi.org/).
-- Add the API Token to your projects secrets with the name `PYPI_TOKEN` by visiting [this page](https://github.com/alohays/openai-tool2mcp/settings/secrets/actions/new).
-- Create a [new release](https://github.com/alohays/openai-tool2mcp/releases/new) on Github.
-- Create a new tag in the form `*.*.*`.
-
-For more details, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/cicd/#how-to-trigger-a-release).
+- The OpenAI team for their excellent tools and APIs
+- The MCP community for developing an open standard for tool usage
+- All contributors who have helped improve this project
 
 ---
 
-Repository initiated with [fpgmaas/cookiecutter-uv](https://github.com/fpgmaas/cookiecutter-uv).
+## ⚠️ Project Status
+
+This project is in active development. While the core functionality works, expect frequent updates and improvements. If you encounter any issues, please submit them on our [issue tracker](https://github.com/alohays/openai-tool2mcp/issues).
+
+---
+
+_openai-tool2mcp is part of the broader [MCPortal](https://github.com/alohays/mcportal) initiative to bridge OpenAI's tools with the open-source MCP ecosystem._

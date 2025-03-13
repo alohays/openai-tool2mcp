@@ -18,6 +18,15 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0.0",
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
+    "requests>=2.0.0",
+]
+
 [project.urls]
 Homepage = "https://alohays.github.io/openai-tool2mcp/"
 Repository = "https://github.com/alohays/openai-tool2mcp"
@@ -114,3 +123,6 @@ skip_empty = true
 [tool.coverage.run]
 branch = true
 source = ["openai_tool2mcp"]
+
+[project.scripts]
+openai-tool2mcp = "openai_tool2mcp.cli:main"
