@@ -1,11 +1,10 @@
 from enum import Enum
-from typing import Optional
 
 
 class OpenAIBuiltInTools(Enum):
     """Enum for built-in OpenAI tools"""
 
-    WEB_SEARCH = "retrieval"
+    WEB_SEARCH = "web_search"
     CODE_INTERPRETER = "code_interpreter"
     WEB_BROWSER = "web_browser"
     FILE_SEARCH = "file_search"
@@ -82,7 +81,7 @@ class ToolRegistry:
         """
         return tool_id in self.tools and self.tools[tool_id]["enabled"]
 
-    def get_openai_tool_type(self, tool_id: str) -> Optional[str]:
+    def get_openai_tool_type(self, tool_id: str) -> str | None:
         """
         Get the OpenAI tool type for a given MCP tool ID.
 
@@ -139,6 +138,6 @@ class ToolRegistry:
         """Register a tool"""
         self.tools[tool_type.value] = tool
 
-    def get_tool(self, tool_type: ToolType) -> Optional[object]:
+    def get_tool(self, tool_type: ToolType) -> object | None:
         """Get a tool by type"""
         return self.tools.get(tool_type.value)

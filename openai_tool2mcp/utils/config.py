@@ -1,5 +1,4 @@
 import os
-from typing import Optional
 
 from dotenv import load_dotenv
 
@@ -16,8 +15,8 @@ class ServerConfig:
 
     def __init__(
         self,
-        openai_api_key: Optional[str] = None,
-        tools: Optional[list[str]] = None,
+        openai_api_key: str | None = None,
+        tools: list[str] | None = None,
         request_timeout: int = 30,
         max_retries: int = 3,
     ):

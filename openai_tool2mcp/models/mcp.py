@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -7,12 +7,12 @@ class MCPRequest(BaseModel):
     """Model for MCP tool request"""
 
     parameters: dict[str, Any] = Field(default_factory=dict)
-    context: Optional[dict[str, Any]] = Field(default=None)
+    context: dict[str, Any] | None = Field(default=None)
 
 
 class MCPResponse(BaseModel):
     """Model for MCP tool response"""
 
     content: str
-    error: Optional[str] = None
-    context: Optional[dict[str, Any]] = Field(default_factory=dict)
+    error: str | None = None
+    context: dict[str, Any] | None = Field(default_factory=dict)

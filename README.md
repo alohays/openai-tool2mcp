@@ -12,6 +12,7 @@
 - 💻 **Access code interpreter functionality in any MCP-compatible LLM**
 - 🔄 **Seamless protocol translation between OpenAI and MCP**
 - 🛠️ **Simple API for easy integration**
+- 🌐 **Full compatibility with the MCP SDK**
 
 ## The Developer's Dilemma
 
@@ -72,6 +73,7 @@ graph TD
 - **Easy Setup**: Get up and running with a few simple commands
 - **OpenAI Tools as MCP Servers**: Wrap powerful OpenAI built-in tools as MCP-compliant servers
 - **Seamless Integration**: Works with Claude App and other MCP-compatible clients
+- **MCP SDK Compatible**: Uses the official MCP Python SDK
 - **Tool Support**:
   - 🔍 Web Search
   - 💻 Code Interpreter
@@ -87,12 +89,16 @@ pip install openai-tool2mcp
 
 # Or install the latest development version
 pip install git+https://github.com/alohays/openai-tool2mcp.git
+
+# Recommended: Install uv for better MCP compatibility
+pip install uv
 ```
 
 ### Prerequisites
 
-- Python 3.9+
+- Python 3.10+
 - OpenAI API key with access to the Assistant API
+- (Recommended) uv package manager for MCP compatibility
 
 ## 🛠️ Quick Start
 
@@ -105,47 +111,106 @@ export OPENAI_API_KEY="your-api-key-here"
 2. **Start the MCP server with OpenAI tools**:
 
 ```bash
-openai-tool2mcp start
+# Recommended: Use uv for MCP compatibility (recommended by MCP documentation)
+uv run openai_tool2mcp/server_entry.py --transport stdio
+
+# Or use the traditional method with the CLI
+openai-tool2mcp start --transport stdio
 ```
 
-3. **Use the tools in Claude App**:
+3. **Use with Claude for Desktop**:
 
-Set up your Claude App to connect to your local MCP server at `http://localhost:8000`.
+Configure your Claude for Desktop to use the server by editing the claude_desktop_config.json:
+
+```json
+{
+  "mcpServers": {
+    "openai-tools": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/absolute/path/to/your/openai-tool2mcp",
+        "run",
+        "openai_tool2mcp/server_entry.py"
+      ]
+    }
+  }
+}
+```
+
+The config file is located at:
+
+- MacOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%AppData%\Claude\claude_desktop_config.json`
 
 ## 💻 Usage Examples
 
 ### Basic Server Configuration
 
 ```python
-from openai_tool2mcp import MCPServer
-from openai_tool2mcp.tools import OpenAIBuiltInTools
+# server_script.py
+from openai_tool2mcp import MCPServer, ServerConfig, OpenAIBuiltInTools
 
-# Create a server with OpenAI web search
-server = MCPServer(tools=[OpenAIBuiltInTools.WEB_SEARCH])
-
-# Start the server
-server.start(host="127.0.0.1", port=8000)
-```
-
-### Custom Configuration
-
-```python
-from openai_tool2mcp import MCPServer, ServerConfig
-from openai_tool2mcp.tools import OpenAIBuiltInTools
-
-# Configure with multiple tools
+# Configure with OpenAI web search
 config = ServerConfig(
     openai_api_key="your-api-key",
-    tools=[
-        OpenAIBuiltInTools.WEB_SEARCH,
-        OpenAIBuiltInTools.CODE_INTERPRETER
-    ],
-    request_timeout=60
+    tools=[OpenAIBuiltInTools.WEB_SEARCH.value]
 )
 
-# Create and start server
-server = MCPServer(config=config)
-server.start()
+# Create and start server with STDIO transport (for MCP compatibility)
+server = MCPServer(config)
+server.start(transport="stdio")
+```
+
+Run it with `uv` as recommended by MCP:
+
+```bash
+uv run server_script.py
+```
+
+### MCP-Compatible Configuration for Claude Desktop
+
+Create a standalone script:
+
+```python
+# openai_tools_server.py
+import os
+from dotenv import load_dotenv
+from openai_tool2mcp import MCPServer, ServerConfig, OpenAIBuiltInTools
+
+# Load environment variables
+load_dotenv()
+
+# Create a server with multiple tools
+config = ServerConfig(
+    openai_api_key=os.environ.get("OPENAI_API_KEY"),
+    tools=[
+        OpenAIBuiltInTools.WEB_SEARCH.value,
+        OpenAIBuiltInTools.CODE_INTERPRETER.value
+    ]
+)
+
+# Create and start the server with stdio transport for MCP compatibility
+server = MCPServer(config)
+server.start(transport="stdio")
+```
+
+Configure Claude Desktop to use this script with `uv`:
+
+```json
+{
+  "mcpServers": {
+    "openai-tools": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/absolute/path/to/your/project/folder",
+        "run",
+        "openai_tools_server.py"
+      ]
+    }
+  }
+}
 ```
 
 ## 📊 How It Works
@@ -166,6 +231,36 @@ sequenceDiagram
     Server->>MCP: Convert to MCP format
     MCP->>Claude: Display result
 ```
+
+## 🔄 MCP SDK Integration
+
+`openai-tool2mcp` is now fully compatible with the MCP SDK. You can use it with the Claude for Desktop app by:
+
+1. Installing the package with `pip install openai-tool2mcp`
+2. Configuring your `claude_desktop_config.json` to include:
+
+```json
+{
+  "mcpServers": {
+    "openai-tools": {
+      "command": "openai-tool2mcp",
+      "args": [
+        "start",
+        "--transport",
+        "stdio",
+        "--tools",
+        "retrieval",
+        "code_interpreter"
+      ]
+    }
+  }
+}
+```
+
+The config file is located at:
+
+- MacOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%AppData%\Claude\claude_desktop_config.json`
 
 ## 🤝 Contributing
 

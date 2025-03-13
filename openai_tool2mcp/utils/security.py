@@ -37,7 +37,7 @@ def sanitize_parameters(parameters: dict) -> dict:
         if isinstance(value, str):
             # Basic sanitization for strings
             sanitized[key] = value.replace("<script>", "").replace("</script>", "")
-        elif isinstance(value, (dict, list)):
+        elif isinstance(value, dict | list):
             # Recursively sanitize nested structures
             sanitized[key] = (
                 sanitize_parameters(value)

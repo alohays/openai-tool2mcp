@@ -209,7 +209,7 @@ class OpenAIClient:
             name="Tool Executor",
             instructions=request.instructions or "Execute the requested tool function.",
             tools=[{"type": request.tool_type}],
-            model="gpt-4-turbo"
+            model="gpt-4o-mini-search-preview"
         )
 
         # Run the assistant

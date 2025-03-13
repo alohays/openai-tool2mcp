@@ -6,13 +6,28 @@ This guide will help you quickly set up and start using openai-tool2mcp to bring
 
 Before you begin, make sure you have:
 
-- Python 3.9 or higher
+- Python 3.10 or higher
 - An OpenAI API key with access to the Assistant API
 - A MCP-compatible client (like Claude App)
+- (Recommended) `uv` package manager for MCP compatibility
 
 ## Installation
 
-### From PyPI (Recommended)
+### Using uv (Recommended for MCP compatibility)
+
+The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) recommends using `uv` for package management and execution:
+
+```bash
+# Install uv if you don't have it
+pip install uv
+
+# Install openai-tool2mcp using uv
+uv pip install openai-tool2mcp
+```
+
+For more details on using `uv` with openai-tool2mcp, see our [dedicated guide](uv-integration.md).
+
+### From PyPI
 
 ```bash
 pip install openai-tool2mcp
@@ -55,17 +70,19 @@ OPENAI_API_KEY=your-api-key-here
 
 ### 2. Start the MCP Server
 
-The simplest way to start the server is using the command-line interface:
+#### Using uv (Recommended for MCP compatibility)
 
 ```bash
-# Start with all tools enabled
-openai-tool2mcp start
-
-# Start with specific tools
-openai-tool2mcp start --tools retrieval code_interpreter
+# Start the server using the standalone entry script
+uv run openai_tool2mcp/server_entry.py --transport stdio
 ```
 
-The server will start on `http://localhost:8000` by default.
+#### Using the CLI
+
+```bash
+# Alternative: Using the CLI
+openai-tool2mcp start --transport stdio
+```
 
 ### 3. Connect Your MCP Client
 

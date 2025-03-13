@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -8,15 +8,15 @@ class ToolRequest(BaseModel):
 
     tool_type: str
     parameters: dict[str, Any]
-    thread_id: Optional[str] = None
-    instructions: Optional[str] = None
+    thread_id: str | None = None
+    instructions: str | None = None
 
 
 class ToolOutput(BaseModel):
     """Model for OpenAI tool output"""
 
     output: str
-    error: Optional[str] = None
+    error: str | None = None
 
 
 class ToolResponse(BaseModel):
